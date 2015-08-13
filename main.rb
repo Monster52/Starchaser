@@ -58,9 +58,9 @@ class Player < Chingu::GameObject
   end
 
   def fire
-  # Bullet.create(:x => @x + Gosu::offset_x(@angle+90, -25), :y => @y + Gosu::offset_y(@angle+90, -25), :angle => @angle)
+   Bullet.create(:x => @x + Gosu::offset_x(@angle+90, -25), :y => @y + Gosu::offset_y(@angle+90, -25), :angle => @angle)
     Bullet.create(:x => @x, :y => @y, :angle => @angle)
-  # Bullet.create(:x => @x + Gosu::offset_x(@angle+90, 25), :y => @y + Gosu::offset_y(@angle+90, 25), :angle => @angle)
+   Bullet.create(:x => @x + Gosu::offset_x(@angle+90, 25), :y => @y + Gosu::offset_y(@angle+90, 25), :angle => @angle)
     Sound["Laser_08.wav"].play
   end
 
@@ -133,8 +133,7 @@ class Star < Chingu::GameObject
 
 end
 
-
-class Level < Chingu::GameState
+class Level1 < Chingu::GameState
   trait :timer
 
   def initialize(options={})
@@ -233,7 +232,7 @@ class Level2 < Chingu::GameState
     super
     
     if Meteor.all.size < 10 
-      Meteor.create(:x=>rand * 1000, :y=>rand * 800, :velocity_x=>3, :velocity_y=>1)
+      Meteor.create(:x=>rand * 1000, :y=>rand * 800, :velocity_x=>-3, :velocity_y=>1)
     end
 
 
@@ -349,17 +348,35 @@ class Intro < Chingu::GameState
   def initialize(options={})
     super
     @title = Chingu::Text.create(:text=>"Starchaser I", :x=>350, :y=>300, :size=>70)
-    @instruct = Chingu::Text.create(:text=>"Q to Quit or N for New Game", :x=>300, :y=>500, :size=>40)
-    self.input = { [:esc, :q] => :exit, :n => Level}
+    @instruct = Chingu::Text.create(:text=>"Q = Quit / N = New Game / I = Instructions", :x=>200, :y=>500, :size=>40)
+    self.input = { [:esc, :q] => :exit, :n => Level1, :i => Instructions}
   end
 end
+
+class Instructions < Chingu::GameState
+  def initialize(options={})
+    super
+    @title = Chingu::Text.create(:text=>"Instructions", :x=>350, :y=>100, :size=>70)
+    @instruct = Chingu::Text.create(:text=>"Left Arrow / 'a' = Turn Left", :x=>350, :y=>300, :size=>30)
+    @instruct = Chingu::Text.create(:text=>"Right Arrow / 'd' = Turn Right", :x=>350, :y=>350, :size=>30)
+    @instruct = Chingu::Text.create(:text=>"Up Arrow / 'w' = Accelerate", :x=>350, :y=>400, :size=>30)
+    @instruct = Chingu::Text.create(:text=>"Down Arrow / 's' = Deccelerate", :x=>350, :y=>450, :size=>30)
+    @instruct = Chingu::Text.create(:text=>"Space / Return = Fire Guns", :x=>350, :y=>500, :size=>30)
+    @instruct = Chingu::Text.create(:text=>"The objective is to obtain 1000 points by cature of stars or shooting meteors.", :x=>150, :y=>600, :size=>30)
+    @instruct = Chingu::Text.create(:text=>"There are 3 Mission Levels and one Casual Level.  Have fun", :x=>150, :y=>650, :size=>30)
+    @instruct = Chingu::Text.create(:text=>"Press M to go back to the Menu", :x=>350, :y=>750, :size=>30)
+
+    self.input = { [:esc, :q] => :exit, :m => Intro}
+  end
+end
+
 
 class Lose < Chingu::GameState
   def initialize(options={})
     super
     @title = Chingu::Text.create(:text=>"You failed the Mission", :x=>250, :y=>300, :size=>70)
     @instruct = Chingu::Text.create(:text=>"Q to Quit or N for New Game", :x=>300, :y=>500, :size=>40)
-    self.input = { [:esc, :q] => :exit, :n => Level}
+    self.input = { [:esc, :q] => :exit, :n => Level1}
   end
 end
 
