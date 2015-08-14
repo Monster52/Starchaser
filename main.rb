@@ -19,8 +19,9 @@ class Intro < Chingu::GameState
   def initialize(options={})
     super
     @title = Chingu::Text.create(:text=>"Starchaser I", :x=>350, :y=>300, :size=>70)
-    @instruct = Chingu::Text.create(:text=>"Q = Quit / N = New Game / I = Instructions", :x=>200, :y=>500, :size=>40)
-    self.input = { [:esc, :q] => :exit, :n => Level1, :i => Instructions}
+    @instruct = Chingu::Text.create(:text=>"Q = Quit / I = Instructions", :x=>325, :y=>500, :size=>40)
+    @game_mode = Chingu::Text.create(:text=>"N = New Game / C = Casual Mode", :x=>250, :y=>550, :size=>40)
+    self.input = { [:esc, :q] => :exit, :n => Level1, :c => Casual, :i => Instructions}
   end
 end
 
@@ -76,6 +77,15 @@ class Win_Level3 < Chingu::GameState
     @title = Chingu::Text.create(:text=> "You have completed all Missions", :x=>150, :y=>300, :size=> 70)
     @instruct = Chingu::Text.create(:text=>"Q to Quit or N for New Game", :x=>300, :y=>500, :size=>40)
     self.input = { [:esc, :q] => :exit, :n => Level1}
+  end
+end
+
+class Casual_End < Chingu::GameState
+  def initialize(options={})
+    super
+    @title = Chingu::Text.create(:text=> "You have completed all Missions", :x=>150, :y=>300, :size=> 70)
+    @instruct = Chingu::Text.create(:text=>"Q = Quit / C = Casual / M = Menu", :x=>300, :y=>500, :size=>40)
+    self.input = { [:esc, :q] => :exit, :n => Casual, :m => Intro}
   end
 end
 
