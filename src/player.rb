@@ -3,7 +3,7 @@ class Player < Chingu::GameObject
   traits :collision_detection, :effect, :velocity
   def initialize(options = {})
     super(options)
-    @image = Image["ship_1.png"]
+    @image = Image["ship.png"]
     self.max_velocity = 15 
 
     self.input = { [:holding_a, :holding_left]  => :turn_left,
@@ -43,9 +43,9 @@ class Player < Chingu::GameObject
   end
 
   def fire
-   Bullet.create(:x => @x + Gosu::offset_x(@angle+90, -25), :y => @y + Gosu::offset_y(@angle+90, -25), :angle => @angle)
+#  Bullet.create(:x => @x + Gosu::offset_x(@angle+90, -25), :y => @y + Gosu::offset_y(@angle+90, -25), :angle => @angle)
     Bullet.create(:x => @x, :y => @y, :angle => @angle)
-   Bullet.create(:x => @x + Gosu::offset_x(@angle+90, 25), :y => @y + Gosu::offset_y(@angle+90, 25), :angle => @angle)
+#  Bullet.create(:x => @x + Gosu::offset_x(@angle+90, 25), :y => @y + Gosu::offset_y(@angle+90, 25), :angle => @angle)
     Sound["Laser_08.wav"].play
   end
 
@@ -58,7 +58,7 @@ class Bullet < Chingu::GameObject
   attr_reader :radius
 
   def initialize(options={})
-    super(options.merge(:image => Image["goldCoin1.png"]))
+    super(options.merge(:image => Image["bullet_rw.png"]))
     @speed = 15 
     @radius = 10 
     @velocity_x = Gosu::offset_x(@angle, @speed)

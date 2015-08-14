@@ -18,27 +18,30 @@ end
 class Intro < Chingu::GameState
   def initialize(options={})
     super
-    @title = Chingu::Text.create(:text=>"Starchaser I", :x=>350, :y=>300, :size=>70)
-    @instruct = Chingu::Text.create(:text=>"Q = Quit / I = Instructions", :x=>325, :y=>500, :size=>40)
-    @game_mode = Chingu::Text.create(:text=>"N = New Game / C = Casual Mode", :x=>250, :y=>550, :size=>40)
     self.input = { [:esc, :q] => :exit, :n => Level1, :c => Casual, :i => Instructions}
+  end
+
+  def setup
+    Sample["open_theme.wav"].play
+  end
+
+  def draw
+    Image["intro.png"].draw(0, 0, 0)
   end
 end
 
 class Instructions < Chingu::GameState
   def initialize(options={})
     super
-    @title = Chingu::Text.create(:text=>"Instructions", :x=>350, :y=>100, :size=>70)
-    @instruct = Chingu::Text.create(:text=>"Left Arrow / 'a' = Turn Left", :x=>350, :y=>300, :size=>30)
-    @instruct = Chingu::Text.create(:text=>"Right Arrow / 'd' = Turn Right", :x=>350, :y=>350, :size=>30)
-    @instruct = Chingu::Text.create(:text=>"Up Arrow / 'w' = Accelerate", :x=>350, :y=>400, :size=>30)
-    @instruct = Chingu::Text.create(:text=>"Down Arrow / 's' = Deccelerate", :x=>350, :y=>450, :size=>30)
-    @instruct = Chingu::Text.create(:text=>"Space / Return = Fire Guns", :x=>350, :y=>500, :size=>30)
-    @instruct = Chingu::Text.create(:text=>"The objective is to obtain 1000 points by cature of stars or shooting meteors.", :x=>150, :y=>600, :size=>30)
-    @instruct = Chingu::Text.create(:text=>"There are 3 Mission Levels and one Casual Level.  Have fun", :x=>150, :y=>650, :size=>30)
-    @instruct = Chingu::Text.create(:text=>"Press M to go back to the Menu", :x=>350, :y=>750, :size=>30)
-
     self.input = { [:esc, :q] => :exit, :m => Intro}
+  end
+
+  def setup
+    #music here
+  end
+
+  def draw
+    Image["instructions.png"].draw(0, 0, 0)
   end
 end
 
@@ -46,37 +49,60 @@ end
 class Lose < Chingu::GameState
   def initialize(options={})
     super
-    @title = Chingu::Text.create(:text=>"You failed the Mission", :x=>250, :y=>300, :size=>70)
-    @instruct = Chingu::Text.create(:text=>"Q to Quit or N for New Game", :x=>300, :y=>500, :size=>40)
     self.input = { [:esc, :q] => :exit, :n => Level1}
+  end
+
+  def setup
+    #music here
+  end
+
+  def draw
+    Image["lose.png"].draw(0, 0, 0)
   end
 end
 
 class Win_Level < Chingu::GameState
   def initialize(options={})
     super
-    @title = Chingu::Text.create(:text=>"You have complete the Mission 1", :x=>150, :y=>300, :size=>70)
-    @instruct = Chingu::Text.create(:text=>"Q to Quit or N for Next Level", :x=>300, :y=>500, :size=>40)
-    self.input = { [:esc, :q] => :exit, :n => Level2}
-#####    Sound["open_theme.wav"].play
+    self.input = { [:esc, :q] => :exit, :n => Level1, :l => Level2}
+  end
+
+  def setup
+    #music here
+  end
+
+  def draw
+    Image["win_1_2.png"].draw(0, 0, 0)
   end
 end
 
 class Win_Level2 < Chingu::GameState
   def initialize(options={})
     super
-    @title = Chingu::Text.create(:text=> "You have completed Mission 2", :x=>150, :y=>300, :size=> 70)
-    @instruct = Chingu::Text.create(:text=>"Q to Quit or N for Next Level", :x=>300, :y=>500, :size=>40)
-    self.input = { [:esc, :q] => :exit, :n => Level3}
+    self.input = { [:esc, :q] => :exit, :n => Level1, :l => Level3}
+  end
+
+  def setup
+    #music here
+  end
+
+  def draw
+    Image["win_1_2.png"].draw(0, 0, 0)
   end
 end
 
 class Win_Level3 < Chingu::GameState
   def initialize(options={})
     super
-    @title = Chingu::Text.create(:text=> "You have completed all Missions", :x=>150, :y=>300, :size=> 70)
-    @instruct = Chingu::Text.create(:text=>"Q to Quit or N for New Game", :x=>300, :y=>500, :size=>40)
     self.input = { [:esc, :q] => :exit, :n => Level1}
+  end
+
+  def setup
+    # music here
+  end
+
+  def draw
+    Image["win.png"].draw(0, 0, 0)
   end
 end
 

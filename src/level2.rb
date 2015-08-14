@@ -19,7 +19,7 @@ class Level2 < Chingu::GameState
   end
 
   def draw
-    Image["space_bg.png"].draw(0, 0, 0)
+    Image["bg_rw.png"].draw(0, 0, 0)
     super
   end
 
