@@ -404,7 +404,7 @@ class Win_Level3 < Chingu::GameState
     super
     @title = Chingu::Text.create(:text=> "You have completed all Missions", :x=>150, :y=>300, :size=> 70)
     @instruct = Chingu::Text.create(:text=>"Q to Quit or N for New Game", :x=>300, :y=>500, :size=>40)
-    self.input = { [:esc, :q] => :exit, :n => Level}
+    self.input = { [:esc, :q] => :exit, :n => Level1}
   end
 end
 
