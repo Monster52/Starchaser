@@ -8,8 +8,10 @@ include Chingu
 require_all File.join(ROOT, "src")
 
 class Game < Chingu::Window
+  attr_accessor :firepower
   def initialize
     super(1000, 800, false)
+    @firepower = 0
 
     push_game_state(Intro)
   end
@@ -22,9 +24,9 @@ class Intro < Chingu::GameState
   end
 
   def setup
-    Sample["open_theme.wav"].play
+    Song["open_theme.ogg"].play(true)
   end
-
+  
   def draw
     Image["intro.png"].draw(0, 0, 0)
   end
@@ -53,7 +55,7 @@ class Lose < Chingu::GameState
   end
 
   def setup
-    #music here
+    Song["Jingle_Lose_00.ogg"].play 
   end
 
   def draw
@@ -68,7 +70,7 @@ class Win_Level < Chingu::GameState
   end
 
   def setup
-    #music here
+    Song["Jingle_Win_00.ogg"].play
   end
 
   def draw
@@ -83,7 +85,7 @@ class Win_Level2 < Chingu::GameState
   end
 
   def setup
-    #music here
+    Song["Jingle_Win_00.ogg"].play
   end
 
   def draw
@@ -98,7 +100,7 @@ class Win_Level3 < Chingu::GameState
   end
 
   def setup
-    # music here
+    Song["Jingle_Win_00.ogg"].play
   end
 
   def draw
@@ -112,6 +114,10 @@ class Casual_End < Chingu::GameState
     @title = Chingu::Text.create(:text=> "You have completed all Missions", :x=>150, :y=>300, :size=> 70)
     @instruct = Chingu::Text.create(:text=>"Q = Quit / C = Casual / M = Menu", :x=>300, :y=>500, :size=>40)
     self.input = { [:esc, :q] => :exit, :n => Casual, :m => Intro}
+  end
+
+  def setup
+    Song["Jingle_Win_00.ogg"].play
   end
 end
 

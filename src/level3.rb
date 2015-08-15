@@ -14,8 +14,14 @@ class Level3 < Chingu::GameState
     Meteor.destroy_all
     Star.destroy_all
     Bullet.destroy_all
-
+    PowerUp.destroy_all
+    $window.firepower = 0
     @score = 0
+    Song["Blind_Shift.ogg"].play
+
+    after(20000) {PowerUp.create(:x => rand * 1000, :y => rand * 800, :type => 1)}
+    after(35000) {PowerUp.create(:x => rand * 1000, :y => rand * 800, :type => 2)}
+    after(60000) {PowerUp.create(:x => rand * 1000, :y => rand * 800, :type => 3)}
   end
 
   def draw
@@ -26,8 +32,8 @@ class Level3 < Chingu::GameState
   def update
     super
     
-    if Meteor.all.size < 10 
-      Meteor.create(:x=>rand * 1000, :y=>rand * 800, :velocity_x=>3, :velocity_y=>5)
+    if rand(100) < 4 && Meteor.all.size < 10 
+      Meteor.create(:x=> rand * 1000, :y=> 800, :velocity_x=>3, :velocity_y=>5)
     end
 
 

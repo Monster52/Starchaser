@@ -16,10 +16,12 @@ class Casual < Chingu::GameState
     Bullet.destroy_all
 
     @score = 0
+
+    Song["Blind_Shift.ogg"].play
   end
 
   def draw
-    Image["space_bg.png"].draw(0, 0, 0)
+    Image["bg_rw.png"].draw(0, 0, 0)
     super
   end
 
