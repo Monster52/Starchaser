@@ -4,22 +4,21 @@ class Level1 < Chingu::GameState
   def initialize(options={})
     super
     @player = Player.create(:x => 500, :y => 400)
-
-    @score = 0
     @life = 3
     self.input = { [:q, :escape] => :exit }
   end
 
   def setup
+    $window.score = 0
     Meteor.destroy_all
     Star.destroy_all
     Bullet.destroy_all
-    @score = 0
     Song["Blind_Shift.ogg"].play
 
     after(20000) {PowerUp.create(:x => rand * 1000, :y => rand * 800, :type => 1)}
     after(35000) {PowerUp.create(:x => rand * 1000, :y => rand * 800, :type => 2)}
     after(60000) {PowerUp.create(:x => rand * 1000, :y => rand * 800, :type => 3)}
+    after(120000) {push_game_state(Win_Level)}
   end
 
   def draw
@@ -31,7 +30,7 @@ class Level1 < Chingu::GameState
     super
     
     if rand(100) < 4 && Meteor.all.size < 5
-      Meteor.create(:x=>rand * 1000, :y=>rand * 800, :velocity_x=>1, :velocity_y=>1)
+      Meteor.create(:x=>rand * 1000, :y=> 800, :velocity_x=>1, :velocity_y=>1)
     end
 
 
@@ -41,14 +40,16 @@ class Level1 < Chingu::GameState
     
     @player.each_bounding_circle_collision(Meteor) do |player, meteor|
       meteor.destroy
+      player.die
       @life -= 1 
-      @score -= 50
+      $window.score -= 50
       Sound["Laser_00.wav"].play
+      sleep 1
     end
 
     @player.each_bounding_circle_collision(Star) do |player, star|
       star.destroy
-      @score += 10
+      $window.score += 10
       Sound["UI_Synth_00.wav"].play
     end
 
@@ -61,7 +62,7 @@ class Level1 < Chingu::GameState
     Bullet.each_bounding_circle_collision(Meteor) do |bullet, meteor|
       meteor.destroy
       bullet.destroy
-      @score += 10
+      $window.score += 10
       Sound["Laser_00.wav"].play
     end
 
@@ -69,12 +70,8 @@ class Level1 < Chingu::GameState
       push_game_state(Lose) 
     end
 
-    if @score == 500
-      push_game_state(Win_Level)
-    end
-
     Bullet.destroy_if { |bullet| bullet.outside_window? }
-    $window.caption = "FPS: #{$window.fps} - Life: #{@life} - Score: #{@score}"
+    $window.caption = "FPS: #{$window.fps} - Life: #{@life} - Score: #{$window.score}"
   end
 end
 

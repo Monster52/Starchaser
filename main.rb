@@ -8,10 +8,11 @@ include Chingu
 require_all File.join(ROOT, "src")
 
 class Game < Chingu::Window
-  attr_accessor :firepower
+  attr_accessor :firepower, :score
   def initialize
     super(1000, 800, false)
     @firepower = 0
+    @score = 0
 
     push_game_state(Intro)
   end
@@ -96,6 +97,7 @@ end
 class Win_Level3 < Chingu::GameState
   def initialize(options={})
     super
+    @title = Chingu::Text.create(:text=> "Your final score is: #{$window.score}", :x=>$window.width/2, :y=>$window.height/2,  :size=> 50)
     self.input = { [:esc, :q] => :exit, :n => Level1}
   end
 
@@ -103,9 +105,6 @@ class Win_Level3 < Chingu::GameState
     Song["Jingle_Win_00.ogg"].play
   end
 
-  def draw
-    Image["win.png"].draw(0, 0, 0)
-  end
 end
 
 class Casual_End < Chingu::GameState

@@ -61,6 +61,9 @@ class Player < Chingu::GameObject
     end
   end
 
+  def die
+    $window.firepower = 0
+  end
   
 end
 
