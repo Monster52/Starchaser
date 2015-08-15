@@ -48,16 +48,16 @@ class Player < Chingu::GameObject
 
     if $window.firepower == 1
       Bullet.create(:x => @x, :y => @y, :angle => @angle)
-      Sound["Laser_08.wav"].play
+      Sound["Laser_08.wav"].play(0.2)
     elsif $window.firepower == 2
       Bullet.create(:x => @x, :y => @y, :angle => @angle)
       Bullet.create(:x => @x + Gosu::offset_x(@angle+90, 25), :y => @y + Gosu::offset_y(@angle+90, 25), :angle => @angle)
-      Sound["Laser_08.wav"].play
+      Sound["Laser_08.wav"].play(0.4)
     elsif $window.firepower == 3
       Bullet.create(:x => @x + Gosu::offset_x(@angle+90, -25), :y => @y + Gosu::offset_y(@angle+90, -25), :angle => @angle)
       Bullet.create(:x => @x, :y => @y, :angle => @angle)
       Bullet.create(:x => @x + Gosu::offset_x(@angle+90, 25), :y => @y + Gosu::offset_y(@angle+90, 25), :angle => @angle)
-      Sound["Laser_08.wav"].play
+      Sound["Laser_08.wav"].play(0.6)
     end
   end
 

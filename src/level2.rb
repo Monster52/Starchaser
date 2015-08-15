@@ -45,14 +45,14 @@ class Level2 < Chingu::GameState
       player.die
       @life -= 1 
       $window.score -= 50
-      Sound["Laser_00.wav"].play
+      Sound["Laser_00.wav"].play(0.6)
       sleep 1
     end
 
     @player.each_bounding_circle_collision(Star) do |player, star|
       star.destroy
       $window.score += 10
-      Sound["UI_Synth_00.wav"].play
+      Sound["UI_Synth_00.wav"].play(0.6)
     end
      
     @player.each_bounding_circle_collision(PowerUp) do |player, powerup|
@@ -65,7 +65,7 @@ class Level2 < Chingu::GameState
       meteor.destroy
       bullet.destroy
       $window.score += 10
-      Sound["Laser_00.wav"].play
+      Sound["Laser_00.wav"].play(0.8)
     end
 
     if @life == 0
