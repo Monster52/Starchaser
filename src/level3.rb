@@ -54,6 +54,12 @@ class Level3 < Chingu::GameState
       Sound["UI_Synth_00.wav"].play
     end
 
+    @player.each_bounding_circle_collision(PowerUp) do |player, powerup|
+      $window.firepower = powerup.type
+      powerup.destroy
+      Sound["powerup.wav"].play
+    end
+
     Bullet.each_bounding_circle_collision(Meteor) do |bullet, meteor|
       meteor.destroy
       bullet.destroy
