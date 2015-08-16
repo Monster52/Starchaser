@@ -29,10 +29,9 @@ class Level1 < Chingu::GameState
   def update
     super
     
-    if rand(100) < 4 && Meteor.all.size < 5
-      Meteor.create(:x=>rand * 1000, :y=> 800, :velocity_x=>1, :velocity_y=>1)
+    if rand(100) < 2 && Meteor.all.size < 5
+      Meteor.create(:x=>rand * 1000, :y=> 0, :velocity_x=>1, :velocity_y=>1)
     end
-
 
     if Star.all.size < 35
       Star.create

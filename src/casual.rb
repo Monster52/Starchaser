@@ -4,8 +4,6 @@ class Casual < Chingu::GameState
   def initialize(options={})
     super
     @player = Player.create(:x => 500, :y => 400)
-
-    @score = 0
     @life = 3
     self.input = { [:q, :escape] => :exit }
   end
@@ -14,9 +12,6 @@ class Casual < Chingu::GameState
     Meteor.destroy_all
     Star.destroy_all
     Bullet.destroy_all
-
-    @score = 0
-
     Song["Blind_Shift.ogg"].play
   end
 
@@ -28,8 +23,8 @@ class Casual < Chingu::GameState
   def update
     super
     
-    if Meteor.all.size < 5
-      Meteor.create
+    if rand(100) < 4 && Meteor.all.size < 5
+      Meteor.create(:x=> rand * 1000, :y => rand * 800)
     end
 
 
@@ -39,21 +34,23 @@ class Casual < Chingu::GameState
     
     @player.each_bounding_circle_collision(Meteor) do |player, meteor|
       meteor.destroy
+      player.die
       @life -= 1 
-      @score -= 50
+      $window.score -= 50
       Sound["Laser_00.wav"].play
+      sleep 1
     end
 
     @player.each_bounding_circle_collision(Star) do |player, star|
       star.destroy
-      @score += 10
+      $window.score += 10
       Sound["UI_Synth_00.wav"].play
     end
 
     Bullet.each_bounding_circle_collision(Meteor) do |bullet, meteor|
       meteor.destroy
       bullet.destroy
-      @score += 10
+      $window.score += 10
       Sound["Laser_00.wav"].play
     end
 
@@ -62,7 +59,7 @@ class Casual < Chingu::GameState
     end
 
     Bullet.destroy_if { |bullet| bullet.outside_window? }
-    $window.caption = "FPS: #{$window.fps} - Life: #{@life} - Score: #{@score}"
+    $window.caption = "FPS: #{$window.fps} - Life: #{@life} - Score: #{$window.score}"
   end
 end
 

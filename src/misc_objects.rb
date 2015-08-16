@@ -8,8 +8,6 @@ class Meteor < Chingu::GameObject
     @image = Image["meteor_rw.png"]  
     @radius = 15
     self.zorder = 100
-    self.x =rand * 1000
-    self.y = 0 
     cache_bounding_circle
   end
 

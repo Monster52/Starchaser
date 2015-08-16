@@ -52,7 +52,7 @@ end
 class Lose < Chingu::GameState
   def initialize(options={})
     super
-    self.input = { [:esc, :q] => :exit, :n => Level1}
+    self.input = { [:esc, :q] => :exit, :n => Level1, :m => Intro}
   end
 
   def setup
@@ -67,7 +67,7 @@ end
 class Win_Level < Chingu::GameState
   def initialize(options={})
     super
-    self.input = { [:esc, :q] => :exit, :n => Level1, :l => Level2}
+    self.input = { [:esc, :q] => :exit, :n => Level1, :l => Level2, :m => Intro}
   end
 
   def setup
@@ -82,7 +82,7 @@ end
 class Win_Level2 < Chingu::GameState
   def initialize(options={})
     super
-    self.input = { [:esc, :q] => :exit, :n => Level1, :l => Level3}
+    self.input = { [:esc, :q] => :exit, :n => Level1, :l => Level3, :m => Intro}
   end
 
   def setup
@@ -98,7 +98,7 @@ class Win_Level3 < Chingu::GameState
   def initialize(options={})
     super
     @title = Chingu::Text.create(:text=> "Your final score is: #{$window.score}", :x=>$window.width/2, :y=>$window.height/2,  :size=> 50)
-    self.input = { [:esc, :q] => :exit, :n => Level1}
+    self.input = { [:esc, :q] => :exit, :n => Level1, :m => Intro}
   end
 
   def setup
