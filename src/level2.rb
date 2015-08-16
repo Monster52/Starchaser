@@ -25,14 +25,16 @@ class Level2 < Chingu::GameState
 
   def draw
     Image["bg_rw.png"].draw(0, 0, 0)
+    
     super
   end
 
   def update
     super
     
+
     if rand(100) < 2 && Meteor.all.size < 10 
-      Meteor.create(:x=> 0, :y=>rand * 800, :velocity_x=>-3, :velocity_y=>1)
+      Meteor.create(:x=> 1000, :y=>rand * 800, :velocity_x=>-3, :velocity_y=>1)
     end
 
 

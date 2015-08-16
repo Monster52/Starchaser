@@ -29,7 +29,7 @@ class Intro < Chingu::GameState
   end
   
   def draw
-    Image["intro.png"].draw(0, 0, 0)
+    Image["intro_02.png"].draw(0, 0, 0)
   end
 end
 
@@ -44,7 +44,7 @@ class Instructions < Chingu::GameState
   end
 
   def draw
-    Image["instructions.png"].draw(0, 0, 0)
+    Image["instructions_01.png"].draw(0, 0, 0)
   end
 end
 
@@ -75,7 +75,7 @@ class Win_Level < Chingu::GameState
   end
 
   def draw
-    Image["win_1_2.png"].draw(0, 0, 0)
+    Image["complete_01.png"].draw(0, 0, 0)
   end
 end
 
@@ -90,35 +90,44 @@ class Win_Level2 < Chingu::GameState
   end
 
   def draw
-    Image["win_1_2.png"].draw(0, 0, 0)
+    Image["complete_01.png"].draw(0, 0, 0)
   end
 end
 
 class Win_Level3 < Chingu::GameState
   def initialize(options={})
     super
-    @title = Chingu::Text.create(:text=> "Your final score is: #{$window.score}", :x=>$window.width/2, :y=>$window.height/2,  :size=> 50)
     self.input = { [:esc, :q] => :exit, :n => Level1, :m => Intro}
+    @final_score = Chingu::Text.create(:text=> "#{$window.score}", :x=>585, :y=>250,  :zorder=> 100, :size=> 45, :color=> Color::GREEN)
   end
 
   def setup
     Song["Jingle_Win_00.ogg"].play
   end
+
+  def draw
+    Image["win_end_01.png"].draw(0, 0, 0)
+    @final_score.draw
+  end
+  
 
 end
 
 class Casual_End < Chingu::GameState
   def initialize(options={})
     super
-    @title = Chingu::Text.create(:text=> "You have completed all Missions", :x=>150, :y=>300, :size=> 70)
-    @instruct = Chingu::Text.create(:text=>"Q = Quit / C = Casual / M = Menu", :x=>300, :y=>500, :size=>40)
+    # @title = Chingu::Text.create(:text=> "You have completed all Missions", :x=>150, :y=>300, :size=> 70)
+    # @instruct = Chingu::Text.create(:text=>"Q = Quit / C = Casual / M = Menu", :x=>300, :y=>500, :size=>40)
     self.input = { [:esc, :q] => :exit, :n => Casual, :m => Intro}
   end
 
   def setup
     Song["Jingle_Win_00.ogg"].play
   end
-end
 
+  def draw
+    Image["casual.png"].draw(0, 0, 0)
+  end
+end
 
 Game.new.show
